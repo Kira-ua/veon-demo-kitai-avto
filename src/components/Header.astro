@@ -8,7 +8,7 @@ import { nav, mainPhone, hours } from "../data/site";
 <header class="site-header" data-rec="U-R009,P-R009">
   <div class="container site-header__row">
     <a class="site-header__logo" href="#top" aria-label="Китай авто, на початок сторінки">
-      <img src="/img/logo.webp" width="269" height="88" alt="Китай авто, магазин автозапчастин" fetchpriority="high" decoding="async" data-rec="P-R001" />
+      <img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}img/logo.webp`} width="269" height="88" alt="Китай авто, магазин автозапчастин" fetchpriority="high" decoding="async" data-rec="P-R001" />
     </a>
 
     <nav class="site-nav" aria-label="Розділи сторінки">

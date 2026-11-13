@@ -16,8 +16,8 @@ import { products, mainPhone, formatPrice, SOON } from "../data/site";
         <li class="price-row">
           <img
             class="price-row__img"
-            src={`/img/${p.img}-176.webp`}
-            srcset={`/img/${p.img}-176.webp 176w, /img/${p.img}-352.webp 352w`}
+            src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}img/${p.img}-176.webp`}
+            srcset={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}img/${p.img}-176.webp 176w, ${import.meta.env.BASE_URL.replace(/\/?$/, '/')}img/${p.img}-352.webp 352w`}
             sizes="(min-width: 48rem) 112px, 88px"
             width="176" height="176" alt={p.alt} loading="lazy" decoding="async"
           />

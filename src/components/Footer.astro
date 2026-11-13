@@ -6,7 +6,7 @@ import { mainPhone, address, hours, futurePages, SOON } from "../data/site";
 <footer class="site-footer" data-rec="U-R012">
   <div class="container site-footer__grid">
     <a class="site-footer__logo" href="#top" aria-label="Китай авто, на початок сторінки">
-      <img src="/img/logo.webp" width="269" height="88" alt="" loading="lazy" decoding="async" />
+      <img src={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}img/logo.webp`} width="269" height="88" alt="" loading="lazy" decoding="async" />
     </a>
     <p class="site-footer__contacts">
       <a class="text-link num" href={mainPhone.href}>{mainPhone.display}<span class="visually-hidden">;</span></a>

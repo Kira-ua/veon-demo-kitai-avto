@@ -22,7 +22,7 @@ const { lang, title, description, canonical, rec } = Astro.props;
     <meta property="og:description" content={description} />
     <meta property="og:locale" content="uk_UA" />
     <meta name="robots" content="noindex" />
-    <link rel="icon" href="/img/logo.webp" type="image/webp" />
+    <link rel="icon" href={`${import.meta.env.BASE_URL.replace(/\/?$/, '/')}img/logo.webp`} type="image/webp" />
     <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
     <slot name="head" />
   </head>
