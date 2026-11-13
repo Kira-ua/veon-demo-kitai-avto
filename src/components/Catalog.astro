@@ -1,0 +1,145 @@
+---
+// Signature: the brand index. Car names set large as rows (not tiles); each row is a future catalogue page.
+import FutureLink from "./FutureLink.astro";
+import CallButton from "./CallButton.astro";
+import { leadBrands, moreBrands, productGroups, mainPhone, SOON } from "../data/site";
+---
+<section id="catalog" class="catalog" data-rec="U-R002" aria-labelledby="catalog-title">
+  <div class="container">
+    <div class="catalog__head">
+      <h2 id="catalog-title" class="section-title">Яка у вас машина?</h2>
+      <p class="catalog__intro">13 марок у каталозі магазину. Оберіть свою або назвіть її менеджеру.</p>
+    </div>
+
+    <ul class="index" aria-label="Основні марки">
+      {leadBrands.map((b, i) => (
+        <li class="index__item" data-reveal style={`--reveal-delay:${i * 40}ms`}>
+          <FutureLink note={SOON} class="brand-row">
+            <span class="brand-row__name">{b.name}</span>
+            {b.models && <span class="brand-row__models">{b.models.map((m, j) => <span class="brand-row__model">{m}{j < b.models.length - 1 ? "," : ""}</span>)}</span>}
+          </FutureLink>
+        </li>
+      ))}
+    </ul>
+
+    <ul class="more" aria-label="Інші марки">
+      {moreBrands.map((b, i) => (
+        <li data-reveal style={`--reveal-delay:${(leadBrands.length + i) * 40}ms`}>
+          <FutureLink note={SOON} class="brand-chip">
+            {b.name}{b.models && <span class="brand-chip__models">{b.models.join(", ")}</span>}
+          </FutureLink>
+        </li>
+      ))}
+    </ul>
+
+    <div class="groups">
+      <h3 class="groups__title">Товарні групи для всіх марок</h3>
+      <ul class="groups__list">
+        {productGroups.map((g) => <li><FutureLink note={SOON} class="future-link--quiet">{g}</FutureLink></li>)}
+      </ul>
+    </div>
+
+    <div class="catalog__ask">
+      <p class="catalog__ask-text">Не знайшли модель чи деталь? Назвіть марку, модель і рік менеджеру.</p>
+      <CallButton phone={mainPhone} variant="green" />
+      <p class="catalog__fact small muted">Лише за запитом «chery» каталог магазину показує 4&nbsp;481 позицію (перевірено 13.11.2026).</p>
+      <FutureLink note={SOON} class="catalog__all future-link--quiet">Весь каталог</FutureLink>
+    </div>
+  </div>
+</section>
+
+<style>
+  .catalog { padding-block: var(--space-8) var(--section-gap-wide); }
+  @media (min-width: 64rem) { .catalog { padding-top: var(--space-6); } }
+  .catalog__head { display: grid; gap: var(--space-3); padding-bottom: var(--space-6); }
+  .catalog__intro { color: var(--color-muted); max-width: 40ch; }
+
+  /* lead rows */
+  .index { border-top: var(--hairline) solid var(--color-text); }
+  .index__item { border-bottom: var(--hairline) solid var(--color-line); }
+  .index :global(.brand-row) {
+    position: relative; isolation: isolate; display: flex; flex-wrap: wrap; align-items: baseline;
+    column-gap: var(--space-5); row-gap: var(--space-1);
+    width: 100%; padding: var(--space-4) var(--space-2);
+    border-radius: 0; overflow: hidden;
+    transition: color var(--dur-fill) var(--ease-out);
+  }
+  .index :global(.brand-row::before) {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: var(--color-field);
+    transform: scaleX(0); transform-origin: left center;
+    transition: transform var(--dur-fill) var(--ease-out);
+  }
+  .index :global(.brand-row__name) {
+    font: 800 var(--text-brand)/1 var(--font-display); letter-spacing: -.03em;
+    overflow-wrap: break-word; min-width: 0;
+  }
+  .index :global(.brand-row__models) { display: flex; flex-wrap: wrap; column-gap: var(--space-2); font: 400 var(--text-models)/1.25 var(--font-body); color: var(--color-muted); min-width: 0; transition: color var(--dur-fill) var(--ease-out); }
+  .index :global(.brand-row__model) { white-space: nowrap; }
+  .index :global(.brand-row:focus-visible) { outline-offset: 2px; }
+  .index :global(.brand-row:active::before),
+  .index :global(.brand-row:focus-visible::before) { transform: scaleX(1); }
+  .index :global(.brand-row:active),
+  .index :global(.brand-row:focus-visible),
+  .index :global(.brand-row:active .brand-row__models),
+  .index :global(.brand-row:focus-visible .brand-row__models) { color: var(--color-on-field); }
+  @media (hover: hover) {
+    .index :global(.brand-row:hover::before) { transform: scaleX(1); }
+    .index :global(.brand-row:hover),
+    .index :global(.brand-row:hover .brand-row__models) { color: var(--color-on-field); }
+  }
+  .index :global(.brand-row .future-link__note[aria-hidden="true"]) {
+    left: auto; right: var(--space-4); top: 50%; transform: translate(0, -50%);
+    background: var(--color-accent); color: var(--color-accent-ink);
+  }
+  .index :global(.brand-row:hover .future-link__note),
+  .index :global(.brand-row:focus-visible .future-link__note) { transform: translate(0, -50%); }
+
+  /* second tier */
+  .more { display: flex; flex-wrap: wrap; column-gap: var(--space-6); row-gap: var(--space-3); padding-block: var(--space-7) var(--space-6); }
+  .more :global(.brand-chip) {
+    font: 800 var(--text-brand-2)/1.1 var(--font-display); letter-spacing: -.02em;
+    align-items: baseline; min-height: 2.75rem; text-decoration: underline; text-decoration-color: transparent; text-decoration-thickness: 3px; text-underline-offset: .18em;
+    transition: text-decoration-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+  }
+  .more :global(.brand-chip:hover), .more :global(.brand-chip:focus-visible) { color: var(--color-field); text-decoration-color: var(--color-field); }
+  .more :global(.brand-chip__models) { font: 400 var(--text-body)/1.1 var(--font-body); color: var(--color-muted); margin-left: var(--space-3); letter-spacing: 0; }
+
+  /* third tier */
+  .groups { display: grid; gap: var(--space-3); padding-bottom: var(--space-7); border-bottom: var(--hairline) solid var(--color-line); }
+  .groups__title { font: 600 var(--text-body)/1.4 var(--font-body); letter-spacing: 0; color: var(--color-muted); }
+  .groups__list { display: flex; flex-wrap: wrap; column-gap: var(--space-5); row-gap: var(--space-2); }
+  .groups__list :global(.future-link) { min-height: 2.75rem; }
+
+  /* ask row */
+  .catalog__ask { display: grid; gap: var(--space-4); justify-items: start; padding-top: var(--space-6); }
+  .catalog__ask-text { font: 800 var(--text-title)/1.15 var(--font-display); letter-spacing: -.01em; max-width: 26ch; }
+  .catalog__fact { max-width: 52ch; }
+  .catalog__ask :global(.catalog__all) { min-height: 2.75rem; font-weight: 600; }
+
+  @media (min-width: 48rem) {
+    .catalog__head { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; }
+    .catalog__intro { justify-self: end; text-align: right; }
+    .index :global(.brand-row) { flex-wrap: nowrap; justify-content: space-between; padding: var(--space-4) var(--space-4); }
+    .index :global(.brand-row__models) { justify-content: flex-end; text-align: right; }
+  }
+  @media (min-width: 64rem) {
+    .catalog__ask { grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: var(--space-6); }
+    .catalog__fact { grid-column: 1; }
+    .catalog__ask :global(.catalog__all) { grid-column: 2; justify-self: end; }
+  }
+
+  /* Reveal of the index (effect 2): 16px rise on wide screens, opacity only on phones. */
+  :global(.js) .index__item[data-reveal]:not(.is-visible),
+  :global(.js) .more [data-reveal]:not(.is-visible) { transform: translateY(16px); }
+  @media (max-width: 47.99rem) {
+    :global(.js) .index__item[data-reveal]:not(.is-visible),
+    :global(.js) .more [data-reveal]:not(.is-visible) { transform: none; }
+    .index__item[data-reveal], .more [data-reveal] { transition-delay: 0ms; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .index :global(.brand-row), .index :global(.brand-row::before), .index :global(.brand-row__models) { transition: none; }
+    :global(.js) .index__item[data-reveal]:not(.is-visible),
+    :global(.js) .more [data-reveal]:not(.is-visible) { opacity: 1; transform: none; }
+  }
+</style>

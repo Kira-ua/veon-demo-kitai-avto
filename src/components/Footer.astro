@@ -1,0 +1,40 @@
+---
+// Compact footer on paper: logo, one contact line, one line of future pages (FutureLink), copyright.
+import FutureLink from "./FutureLink.astro";
+import { mainPhone, address, hours, futurePages, SOON } from "../data/site";
+---
+<footer class="site-footer" data-rec="U-R012">
+  <div class="container site-footer__grid">
+    <a class="site-footer__logo" href="#top" aria-label="Китай авто, на початок сторінки">
+      <img src="/img/logo.webp" width="269" height="88" alt="" loading="lazy" decoding="async" />
+    </a>
+    <p class="site-footer__contacts">
+      <a class="text-link num" href={mainPhone.href}>{mainPhone.display}<span class="visually-hidden">;</span></a>
+      <span>{address.city}, {address.street}</span>
+      <span>{hours.full}</span>
+    </p>
+    <nav class="site-footer__nav" aria-label="Сторінки повної версії сайту">
+      <ul>{futurePages.map((p) => <li><FutureLink note={SOON} class="future-link--quiet">{p}</FutureLink></li>)}</ul>
+    </nav>
+    <p class="site-footer__copy small muted">© Китай авто, 2026</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer { border-top: var(--hairline) solid var(--color-line); padding-block: var(--space-7) var(--space-10); }
+  .site-footer__grid { display: grid; gap: var(--space-5); }
+  .site-footer__logo { justify-self: start; border-radius: var(--radius); }
+  .site-footer__logo img { height: 2.5rem; width: auto; }
+  .site-footer__contacts { display: flex; flex-wrap: wrap; column-gap: var(--space-6); row-gap: var(--space-2); }
+  .site-footer__contacts a { font-weight: 600; }
+  .site-footer__nav ul { display: flex; flex-wrap: wrap; column-gap: var(--space-5); row-gap: var(--space-1); }
+  .site-footer__nav :global(.future-link) { min-height: 2.75rem; font-size: var(--text-small); white-space: nowrap; }
+
+  @media (min-width: 64rem) {
+    .site-footer { padding-block: var(--space-7); }
+    .site-footer__grid { grid-template-columns: auto minmax(0, 1fr); column-gap: var(--space-7); align-items: center; }
+    .site-footer__contacts { justify-content: flex-end; }
+    .site-footer__nav { grid-column: 1 / -1; padding-top: var(--space-3); border-top: var(--hairline) solid var(--color-line); }
+    .site-footer__copy { grid-column: 1 / -1; }
+  }
+</style>

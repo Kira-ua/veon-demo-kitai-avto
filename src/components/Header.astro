@@ -1,0 +1,114 @@
+---
+// Fixed header: logo → #top, five anchors, the number as a button with the schedule (concept.md «Навигация»).
+// Under 1024px: logo, a call icon-button and «Меню» (native popover: works without scripts, Esc closes it).
+import CallButton from "./CallButton.astro";
+import PhoneIcon from "./PhoneIcon.astro";
+import { nav, mainPhone, hours } from "../data/site";
+---
+<header class="site-header" data-rec="U-R009,P-R009">
+  <div class="container site-header__row">
+    <a class="site-header__logo" href="#top" aria-label="Китай авто, на початок сторінки">
+      <img src="/img/logo.webp" width="269" height="88" alt="Китай авто, магазин автозапчастин" fetchpriority="high" decoding="async" data-rec="P-R001" />
+    </a>
+
+    <nav class="site-nav" aria-label="Розділи сторінки">
+      <ul class="site-nav__list">
+        {nav.map((item) => <li><a class="site-nav__link" href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="site-header__call">
+      <CallButton phone={mainPhone} variant="green" class="site-header__btn" />
+      <span class="site-header__hours">{hours.compact}</span>
+    </div>
+
+    <div class="site-header__mobile">
+      <a class="icon-btn icon-btn--green" href={mainPhone.href} aria-label={`Подзвонити ${mainPhone.display}`}><PhoneIcon /></a>
+      <button class="icon-btn icon-btn--menu" type="button" popovertarget="mobile-menu" aria-controls="mobile-menu">Меню</button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="mobile-menu" popover>
+    <nav aria-label="Розділи сторінки, мобільне меню">
+      <ul>
+        {nav.map((item) => <li><a class="mobile-menu__link" href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="mobile-menu__foot">
+      <CallButton phone={mainPhone} variant="green" size="lg" label="Подзвонити" class="mobile-menu__call" />
+      <p class="small muted">{hours.full}</p>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed; inset: 0 0 auto 0; z-index: var(--z-header);
+    height: var(--header-h);
+    background: var(--color-bg);
+    border-bottom: var(--hairline) solid var(--color-line);
+  }
+  .site-header__row { height: 100%; display: flex; align-items: center; gap: var(--space-5); }
+  .site-header__logo { display: block; flex: none; margin-right: auto; border-radius: var(--radius); }
+  .site-header__logo img { height: 2.25rem; width: auto; }
+
+  .site-nav, .site-header__call { display: none; }
+  .site-header__mobile { display: flex; gap: var(--space-2); }
+
+  .icon-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 2.75rem; height: 2.75rem; padding: 0 var(--space-3);
+    border: 2px solid transparent; border-radius: var(--radius);
+    font: 600 var(--text-body)/1 var(--font-body);
+    cursor: pointer; text-decoration: none;
+    transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+  }
+  .icon-btn:active { transform: scale(.96); }
+  .icon-btn--green { background: var(--color-field); color: var(--color-on-field); }
+  .icon-btn--green:hover { background: var(--color-field-strong); }
+  .icon-btn--menu { background: transparent; color: var(--color-text); border-color: var(--color-text); }
+  .icon-btn--menu:hover { background: var(--color-text); color: var(--color-on-field); }
+
+  .mobile-menu {
+    position: fixed; inset: var(--header-h) 0 auto 0; margin: 0; width: 100%; max-width: none;
+    padding: var(--space-2) var(--space) var(--space-5);
+    border: 0; border-bottom: var(--hairline) solid var(--color-line);
+    background: var(--color-bg); color: var(--color-text);
+  }
+  .mobile-menu li + li { border-top: var(--hairline) solid var(--color-line); }
+  .mobile-menu__link {
+    display: flex; align-items: center; min-height: 3.25rem;
+    font: 800 var(--text-title)/1.1 var(--font-display); letter-spacing: -.01em; text-decoration: none;
+  }
+  .mobile-menu__link:hover { color: var(--color-field); }
+  .mobile-menu__foot { display: grid; gap: var(--space-2); padding-top: var(--space-4); }
+  .mobile-menu__call { width: 100%; }
+
+  @media (min-width: 64rem) {
+    .site-header__logo img { height: 3rem; }
+    .site-nav { display: block; }
+    .site-header__call { display: flex; flex-direction: column; align-items: center; gap: var(--space-1); }
+    .site-header__mobile { display: none; }
+    .mobile-menu { display: none; }
+    .site-nav__list { display: flex; gap: var(--space-1); }
+    .site-nav__link {
+      position: relative; display: inline-flex; align-items: center; min-height: 2.75rem; padding: 0 var(--space-3);
+      font-size: var(--text-body); text-decoration: none; white-space: nowrap; border-radius: var(--radius);
+      transition: color var(--dur-micro) var(--ease-out);
+    }
+    .site-nav__link::after {
+      content: ""; position: absolute; left: var(--space-3); right: var(--space-3); bottom: var(--space-1); height: 3px;
+      background: var(--color-field); transform: scaleX(0); transform-origin: left;
+      transition: transform var(--dur-micro) var(--ease-out);
+    }
+    .site-nav__link:hover::after { transform: scaleX(1); }
+    .site-nav__link[aria-current="true"] { font-weight: 600; }
+    .site-nav__link[aria-current="true"]::after { transform: scaleX(1); background: var(--color-accent); height: 4px; }
+    :global(.site-header__btn) { min-height: 2.5rem; padding: 0 var(--space-4); }
+    .site-header__hours { font-size: var(--text-micro); line-height: 1; color: var(--color-muted); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .icon-btn:active { transform: none; }
+    .site-nav__link::after { transition: none; }
+  }
+</style>

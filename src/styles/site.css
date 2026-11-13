@@ -1,0 +1,86 @@
+/* Shared components of the Китай авто homepage: type, buttons, fields, FutureLink. Values only through tokens.css. */
+html { font-size: 100%; overflow-x: clip; scrollbar-color: var(--color-field) var(--color-bg); }
+body { overflow-x: clip; }
+::selection { background: var(--color-accent); color: var(--color-accent-ink); }
+body { font-size: var(--text-body); font-synthesis: none; -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { margin: 0; font-family: var(--font-display); font-weight: 800; letter-spacing: -.02em; line-height: 1.08; overflow-wrap: break-word; min-width: 0; }
+p, ul, ol { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+.num { font-variant-numeric: tabular-nums; }
+.section-title { font-size: var(--text-section); line-height: 1.05; }
+.lead { font-size: var(--text-lead); line-height: 1.5; }
+.small { font-size: var(--text-small); line-height: 1.5; }
+.muted { color: var(--color-muted); }
+
+/* Surfaces: each sets its own text colour and focus ring (Floor 41, 26a). */
+.on-field { background: var(--color-field); color: var(--color-on-field); --focus-ring: var(--color-accent); }
+.on-ink { background: var(--color-text); color: var(--color-on-field); --focus-ring: var(--color-accent); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-3);
+  min-height: var(--control-h); padding: 0 var(--space-5);
+  border: 2px solid transparent; border-radius: var(--radius);
+  font-family: var(--font-body); font-weight: 600; font-size: var(--text-body); line-height: 1.1;
+  text-decoration: none; white-space: nowrap; font-variant-numeric: tabular-nums;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+}
+.btn:active { transform: scale(.98); }
+.btn--lg { min-height: var(--control-h-lg); padding: 0 var(--space-6); font-size: var(--text-lead); }
+.btn .phone-icon { flex: none; }
+.btn { max-width: 100%; }
+@media (max-width: 24.99rem) {
+  .btn { white-space: normal; text-align: center; padding-block: var(--space-2); }
+  .btn--lg { padding-inline: var(--space-4); }
+  .btn__num { white-space: nowrap; }
+}
+.btn--lime { background: var(--color-accent); color: var(--color-accent-ink); }
+.btn--lime:hover { background: var(--color-accent-hover); }
+.btn--green { background: var(--color-field); color: var(--color-on-field); }
+.btn--green:hover { background: var(--color-field-strong); }
+.btn--outline { border-color: var(--color-field); color: var(--color-field); background: transparent; }
+.btn--outline:hover { background: var(--color-field); color: var(--color-on-field); }
+.btn--outline-light { border-color: var(--color-on-field); color: var(--color-on-field); background: transparent; }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: .55; cursor: not-allowed; transform: none; }
+.btn--outline-light:hover { background: var(--color-on-field); color: var(--color-field); }
+
+/* Text link with an underline that thickens on hover */
+.text-link { color: inherit; font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .22em; transition: text-decoration-color var(--dur-micro) var(--ease-out); }
+.text-link:hover { text-decoration-thickness: 2px; }
+
+/* FutureLink: a page that comes in the full site. Same quiet look everywhere; note on hover and focus. */
+.future-link { cursor: default; border-radius: var(--radius); }
+.future-link__note[aria-hidden="true"] { background: var(--color-text); color: var(--color-on-field); font-family: var(--font-body); font-weight: 400; letter-spacing: 0; font-size: var(--text-small); padding: var(--space-1) var(--space-3); transition: opacity var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
+.on-field .future-link__note[aria-hidden="true"], .on-ink .future-link__note[aria-hidden="true"] { background: var(--color-on-field); color: var(--color-text); }
+.future-link:focus-visible, .future-link:focus { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+.future-link:focus .future-link__note, .future-link:focus-visible .future-link__note { opacity: 1; }
+.future-link--quiet { text-decoration: underline dotted; text-decoration-thickness: 1px; text-underline-offset: .25em; }
+.future-link--quiet:hover { text-decoration-style: solid; }
+
+.section { padding-block: var(--section-gap); }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn:active { transform: none; }
+}
+
+/* Fixed header offset */
+body { padding-top: var(--header-h); }
+@media (max-width: 63.99rem) { .js body { padding-bottom: var(--space-9); } }
+
+/* Phone call bar (StickyCall.astro, effect 3): hidden only once scripting runs (.js), slides up after the hero. */
+.call-bar { display: none; }
+@media (max-width: 63.99rem) {
+  .js .call-bar {
+    position: fixed; inset: auto 0 0 0; z-index: var(--z-bar);
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-2);
+    padding: var(--space-2) var(--space) calc(var(--space-2) + env(safe-area-inset-bottom));
+    background: var(--color-field); --focus-ring: var(--color-accent);
+    transition: transform var(--dur-bar) var(--ease-out);
+  }
+  .js .call-bar:not(.is-shown) { transform: translateY(110%); }
+  .call-bar .btn { min-height: 3rem; padding: 0 var(--space-4); }
+  .call-bar .call-bar__call .btn__num { display: none; }
+}
+@media (min-width: 25rem) and (max-width: 63.99rem) { .call-bar .call-bar__call .btn__num { display: inline; } }
+@media (prefers-reduced-motion: reduce) { .js .call-bar { transition: none; } }

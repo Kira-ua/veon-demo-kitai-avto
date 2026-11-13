@@ -1,0 +1,67 @@
+/* Hallmark · shape: custom (green field hero, type index, price list, green request field, figure, ink statement, contacts) · genre: modern-minimal · theme: custom · job: buy (+visit) · idea: "Спершу назвіть машину: назви авто й деталей — найбільші слова, зелений вивіски збирає їх у покажчик" · vibe: "прямий, крамничний, впевнений, зелений, типографський"
+ * paper: #F3F6F1 · accent: #B9E05A · display: Geologica · body: Onest · hero: зелене поле, H1 на 9 колонок, кнопка дзвінка праворуч, перший рядок покажчика марок біля згину · nav: логотип, 5 якорів, номер-кнопка з графіком · footer: компактний, один рядок посилань і контакти · imagery: client photos · signature: покажчик марок — назви авто великим набором, рядок заливається зеленим
+ * axes: light/grotesk-heavy/chromatic-green · posture: committed · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H5 E4 S5 R4 V4 · weakest: P, a shop page argues little; the whole page is set as the counter conversation (car first, then the part, then the call) instead of a slogan */
+/* Hallmark · answer F4 · two filled recipes are one primary on two surfaces: lime on the green field and the dark statement, green on paper (concept.md «Кнопки»); never both on one surface */
+/* Hallmark · waive 38iii · fitment (Geely GC5) set in Onest 600 inside product names · concept.md «Товары»: марка и модель выделены начертанием 600, the car is what the buyer scans for */
+/* Hallmark · waive 39b · lime call buttons 64px on 1440 (56px on phones) · concept.md «Кнопки»: главная кнопка 56–64 px, the call is the one action of the page */
+/* Hallmark · waive 69 · hours appear by every call button (header, hero, request, contacts, footer) · ux/demo-home.md §1: the schedule stands next to each tel: so nobody calls on a weekend blind */
+/* Line 1 of this file is the Hallmark stamp (docs/process/hallmark.md): fill it from design/concept.md; waivers go right below it. */
+/* Client design tokens from design/concept.md (veon-concept: #F3F6F1, #16211A, #26622A, #B9E05A, #4C5A50; Geologica, Onest). */
+:root {
+  /* colour roles */
+  --color-bg: #F3F6F1;            /* paper */
+  --color-surface: #FBFCFA;       /* price rows, contact rows */
+  --color-text: #16211A;          /* ink, also the dark field of #repair */
+  --color-muted: #4C5A50;         /* captions, codes, schedule */
+  --color-line: #C9D4C6;          /* hairlines (decorative) */
+  --color-field: #26622A;         /* brand green field, primary on paper */
+  --color-field-strong: #1E5222;  /* hover of green controls */
+  --color-on-field: #F3F6F1;      /* text on green and ink */
+  --color-on-field-soft: #CFE2CB; /* secondary text on green (5.4:1) */
+  --color-on-ink-soft: #B9C6BC;   /* secondary text on ink (9.4:1) */
+  --color-accent: #B9E05A;        /* lime signal */
+  --color-accent-hover: #CBEA78;
+  --color-accent-ink: #16211A;    /* text on lime */
+  --focus-ring: var(--color-text);
+
+  /* type */
+  --font-display: "Geologica Variable", "Arial Narrow", sans-serif;
+  --font-body: "Onest Variable", system-ui, sans-serif;
+  --text-display: clamp(2.5rem, 1.55rem + 4.2vw, 5.5rem);   /* 40 → 88 */
+  --text-brand: clamp(2.75rem, 1.45rem + 5.6vw, 6rem);      /* 44 → 96, index rows */
+  --text-figure: clamp(5.5rem, 3.2rem + 9.8vw, 10rem);      /* 88 → 160, «40 грн» */
+  --text-section: clamp(2rem, 1.45rem + 2.4vw, 3.5rem);     /* 32 → 56 */
+  --text-brand-2: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);   /* 28 → 40, second tier, phones */
+  --text-models: clamp(1.375rem, 1.28rem + .4vw, 1.5rem);   /* 22 → 24, models in index rows */
+  --text-title: clamp(1.5rem, 1.32rem + .75vw, 2rem);       /* 24 → 32 */
+  --text-lead: clamp(1.125rem, 1.08rem + .2vw, 1.25rem);    /* 18 → 20 */
+  --text-body: clamp(1rem, .98rem + .1vw, 1.0625rem);       /* 16 → 17 */
+  --text-small: .875rem;                                     /* 14 */
+  --text-micro: .8125rem;                                    /* 13, header schedule only */
+
+  /* space (4/8 scale) */
+  --space-1: .25rem;  --space-2: .5rem;  --space-3: .75rem;  --space-4: 1rem;
+  --space-5: 1.5rem;  --space-6: 2rem;   --space-7: 3rem;    --space-8: 4rem;
+  --space-9: 6rem;    --space-10: 8rem;  --space-11: 10rem;
+  --section-gap: clamp(4rem, 2.3rem + 7.2vw, 8rem);          /* 64 → 128 */
+  --section-gap-wide: clamp(5rem, 2.6rem + 10vw, 10rem);     /* 80 → 160 */
+  --space: clamp(1.25rem, 5vw, 5rem);                        /* page gutter 20 → 80 */
+  --container: 1360px;
+  --header-h: 3.5rem;
+  --control-h: 3rem;     /* 48 */
+  --control-h-lg: 3.5rem; /* 56 */
+
+  --radius: 4px;
+  --hairline: 1px;
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --dur: 600ms;
+  --dur-fill: 260ms;
+  --dur-bar: 280ms;
+  --dur-micro: 160ms;
+  --z-header: 50;
+  --z-bar: 40;
+}
+@media (min-width: 64rem) {
+  :root { --header-h: 4.75rem; --control-h-lg: 4rem; }
+}

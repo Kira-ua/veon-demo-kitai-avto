@@ -1,0 +1,38 @@
+---
+// Repair statement on the ink field (B-F004): no prices, terms or guarantees, there is no data for them.
+import CallButton from "./CallButton.astro";
+import { mainPhone } from "../data/site";
+---
+<section id="repair" class="repair on-ink" data-rec="U-R011" aria-labelledby="repair-title">
+  <div class="container repair__grid">
+    <h2 id="repair-title" class="repair__title">Ремонтуємо ходову частину і двигуни легкових і вантажних авто</h2>
+    <div class="repair__side">
+      <p class="lead repair__lede">Вартість і терміни ремонту менеджер назве по телефону.</p>
+      <CallButton phone={mainPhone} variant="lime" size="lg" label="Подзвонити" />
+      <a class="text-link repair__link" href="#catalog">Деталі для ремонту</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .repair { padding-block: var(--section-gap); }
+  .repair__grid { display: grid; gap: var(--space-7); }
+  .repair__title { font-size: var(--text-section); line-height: 1.05; max-width: 18ch; }
+  .repair__side { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); justify-items: start; align-content: end; }
+  .repair__lede { color: var(--color-on-ink-soft); max-width: 32ch; }
+  .repair__side :global(.btn) { width: 100%; }
+  .repair__link { display: inline-flex; align-items: center; min-height: 2.75rem; }
+
+  @media (min-width: 48rem) {
+    .repair__side :global(.btn) { width: auto; }
+  }
+  @media (min-width: 64rem) {
+    .repair__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--space-5); align-items: end; }
+    .repair__title { grid-column: 1 / span 8; font-size: var(--text-display); line-height: 1.02; max-width: none; }
+    .repair__side { grid-column: 9 / span 4; }
+  }
+  @media (min-width: 64rem) and (max-width: 79.99rem) {
+    .repair__title { grid-column: 1 / span 7; }
+    .repair__side { grid-column: 8 / span 5; }
+  }
+</style>

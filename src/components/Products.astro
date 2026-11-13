@@ -1,0 +1,73 @@
+---
+// Price list: real positions from the client's catalogue, full names, fitment in 600, price large, call to check stock.
+import FutureLink from "./FutureLink.astro";
+import CallButton from "./CallButton.astro";
+import { products, mainPhone, formatPrice, SOON } from "../data/site";
+---
+<section id="products" class="products" data-rec="P-R005" aria-labelledby="products-title">
+  <div class="container">
+    <div class="products__head">
+      <h2 id="products-title" class="section-title">Деталі й ціни з каталогу</h2>
+      <p class="products__note">Ціни, як у каталозі магазину. Наявність перед покупкою уточнює менеджер.</p>
+    </div>
+
+    <ul class="price-list">
+      {products.map((p) => (
+        <li class="price-row">
+          <img
+            class="price-row__img"
+            src={`/img/${p.img}-176.webp`}
+            srcset={`/img/${p.img}-176.webp 176w, /img/${p.img}-352.webp 352w`}
+            sizes="(min-width: 48rem) 112px, 88px"
+            width="176" height="176" alt={p.alt} loading="lazy" decoding="async"
+          />
+          <div class="price-row__body">
+            <h3 class="price-row__name">
+              <FutureLink note={SOON} class="price-row__link">
+                <span>{p.part}{p.code && " "}{p.code && <span class="num">арт.{p.code}</span>}{p.partTail && ` ${p.partTail}`}{" "}<strong class="price-row__fit">{p.fit}</strong></span>
+              </FutureLink>
+            </h3>
+            <div class="price-row__buy">
+              <p class="price-row__price num">{formatPrice(p.price)}</p>
+              <CallButton phone={mainPhone} variant="outline" label="Уточнити наявність" class="price-row__call" />
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .products { padding-block: 0 var(--section-gap-wide); }
+  .products__head { display: grid; gap: var(--space-3); padding-bottom: var(--space-6); }
+  .products__note { color: var(--color-muted); max-width: 44ch; }
+
+  .price-list { display: grid; grid-template-columns: minmax(0, 1fr); border-top: var(--hairline) solid var(--color-text); }
+  .price-row {
+    display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: var(--space-4);
+    padding: var(--space-5) 0; border-bottom: var(--hairline) solid var(--color-line);
+  }
+  .price-row__img { width: 5.5rem; height: 5.5rem; object-fit: cover; border-radius: var(--radius); background: var(--color-surface); }
+  .price-row__body { display: grid; gap: var(--space-4); align-content: start; min-width: 0; }
+  .price-row__name { font: 400 var(--text-body)/1.45 var(--font-body); letter-spacing: 0; }
+  .price-row__name :global(.price-row__link) { display: inline; }
+  .price-row__name :global(.price-row__link:hover) { color: var(--color-field); }
+  .price-row__fit { font-weight: 600; }
+  .price-row__buy { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3) var(--space-5); }
+  .price-row__price { font: 800 var(--text-title)/1 var(--font-display); letter-spacing: -.02em; white-space: nowrap; }
+  .price-row__buy :global(.price-row__call) { min-height: 2.75rem; padding: 0 var(--space-4); font-size: var(--text-small); }
+  .price-row__buy :global(.price-row__call .btn__num) { display: none; }
+
+  @media (min-width: 48rem) {
+    .products__head { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; }
+    .products__note { justify-self: end; text-align: right; }
+    .price-row { grid-template-columns: 7rem minmax(0, 1fr); gap: var(--space-5); padding: var(--space-5) var(--space-4); background: var(--color-surface); }
+    .price-row__img { width: 7rem; height: 7rem; }
+  }
+  @media (min-width: 64rem) {
+    .price-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-5); border-top: 0; }
+    .price-row { border-top: var(--hairline) solid var(--color-text); border-bottom: 0; }
+    .price-row__body { grid-template-rows: 1fr auto; }
+  }
+</style>

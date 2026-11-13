@@ -1,0 +1,9 @@
+---
+// Phones and tablets: call bar slides up after the hero leaves the screen (effect 3). Needs scripts; without them the header call stays.
+import CallButton from "./CallButton.astro";
+import { mainPhone } from "../data/site";
+---
+<div class="call-bar" data-call-bar data-rec="U-R009">
+  <CallButton phone={mainPhone} variant="lime" label="Подзвонити" class="call-bar__call" />
+  <a class="btn btn--outline-light call-bar__brands" href="#catalog">Марки</a>
+</div>

@@ -1,0 +1,48 @@
+---
+// Delivery and payment as plain facts (B-F007, B-F008), one figure at graphic scale: 40 грн across Kremenchuk.
+import FutureLink from "./FutureLink.astro";
+import { carriers, payments, address, SOON } from "../data/site";
+---
+<section id="delivery" class="delivery" data-rec="U-R010" aria-labelledby="delivery-title">
+  <div class="container delivery__grid">
+    <div class="delivery__lead">
+      <h2 id="delivery-title" class="section-title">Доставка і оплата</h2>
+      <p class="figure"><span class="figure__num num">40&nbsp;грн</span><span class="figure__cap">доставка по Кременчуку</span></p>
+    </div>
+    <div class="delivery__facts">
+      <div class="facts">
+        <h3 class="facts__title">По всій Україні перевізниками</h3>
+        <ul class="facts__list">{carriers.map((c) => <li>{c}</li>)}</ul>
+      </div>
+      <div class="facts">
+        <h3 class="facts__title">Оплата</h3>
+        <ul class="facts__list">{payments.map((p) => <li>{p}</li>)}</ul>
+      </div>
+      <p class="delivery__shop">Деталь можна забрати й оплатити в магазині: {address.street}.</p>
+      <FutureLink note={SOON} class="future-link--quiet delivery__more">Усі умови доставки</FutureLink>
+    </div>
+  </div>
+</section>
+
+<style>
+  .delivery { padding-block: var(--section-gap-wide) var(--section-gap); }
+  .delivery__grid { display: grid; gap: var(--space-7); }
+  .figure { display: grid; gap: var(--space-2); padding-top: var(--space-6); }
+  .figure__num { font: 800 var(--text-figure)/.95 var(--font-display); letter-spacing: -.04em; color: var(--color-field); white-space: nowrap; }
+  .figure__cap { font-size: var(--text-lead); font-weight: 600; }
+  .delivery__facts { display: grid; gap: var(--space-6); align-content: start; }
+  .facts { display: grid; gap: var(--space-3); }
+  .facts__title { font-size: var(--text-title); line-height: 1.15; letter-spacing: -.01em; }
+  .facts__list li { padding: var(--space-3) 0; border-bottom: var(--hairline) solid var(--color-line); font-size: var(--text-lead); }
+  .facts__list li:first-child { border-top: var(--hairline) solid var(--color-line); }
+  .delivery__shop { color: var(--color-muted); max-width: 48ch; }
+  .delivery__facts :global(.delivery__more) { justify-self: start; min-height: 2.75rem; font-weight: 600; }
+
+  @media (min-width: 64rem) {
+    .delivery__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--space-5); }
+    .delivery__lead { grid-column: 1 / span 6; }
+    .delivery__facts { grid-column: 7 / span 6; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-5); padding-top: var(--space-2); }
+    .facts__title { min-height: 2.3em; }
+    .delivery__shop, .delivery__facts :global(.delivery__more) { grid-column: 1 / -1; }
+  }
+</style>

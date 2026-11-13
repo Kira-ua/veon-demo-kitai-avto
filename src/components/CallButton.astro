@@ -1,0 +1,18 @@
+---
+// A real call: tel: link styled as a button. Variants follow concept.md «Кнопки».
+import PhoneIcon from "./PhoneIcon.astro";
+import type { Phone } from "../data/site";
+interface Props {
+  phone: Phone;
+  variant?: "lime" | "green" | "outline" | "outline-light";
+  size?: "md" | "lg";
+  label?: string;
+  rec?: string;
+  class?: string;
+}
+const { phone, variant = "green", size = "md", label, rec, class: cls } = Astro.props;
+---
+<a class:list={["btn", `btn--${variant}`, `btn--${size}`, cls]} href={phone.href} data-rec={rec}>
+  <PhoneIcon />
+  <span class="btn__text">{label && <span class="btn__label">{label} </span>}<span class="btn__num">{phone.display}</span><span class="visually-hidden">;</span></span>
+</a>

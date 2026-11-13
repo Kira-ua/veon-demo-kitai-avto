@@ -1,0 +1,46 @@
+---
+// First screen: the green field, the H1 as the picture, one lime call button (concept.md «Первый экран»).
+import CallButton from "./CallButton.astro";
+import { mainPhone, hours, address } from "../data/site";
+---
+<section id="hero" class="hero on-field" data-rec="U-R001,G-R002" aria-labelledby="hero-title">
+  <div class="container hero__grid">
+    <h1 id="hero-title" class="hero__title">Запчастини до китайських авто в&nbsp;Кременчуці</h1>
+    <p class="hero__lede lead">Оригінал і аналоги для Chery, Geely, Great Wall, BYD, Lifan та ще 8 марок, з доставкою по всій Україні.</p>
+    <div class="hero__actions">
+      <CallButton phone={mainPhone} variant="lime" size="lg" label="Подзвонити" class="hero__call" />
+      <a class="hero__brands btn btn--outline-light" href="#catalog">Обрати марку авто</a>
+      <p class="hero__meta small">{hours.full}<br />{address.street}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { padding-block: var(--space-7) var(--space-8); }
+  .hero__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
+  .hero__title { font-size: var(--text-display); line-height: 1.02; color: var(--color-on-field); max-width: 15ch; }
+  .hero__lede { color: var(--color-on-field-soft); max-width: 36ch; }
+  .hero__actions { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3); padding-top: var(--space-2); }
+  .hero__actions > * { min-width: 0; }
+  .hero__actions :global(.btn) { width: 100%; }
+  .hero__meta { color: var(--color-on-field-soft); padding-top: var(--space-1); }
+
+  @media (min-width: 48rem) {
+    .hero__actions { grid-template-columns: auto auto; justify-content: start; align-items: center; column-gap: var(--space-5); }
+    .hero__actions :global(.btn) { width: auto; }
+    .hero__meta { grid-column: 1 / -1; }
+  }
+
+  @media (min-width: 64rem) {
+    .hero { padding-block: var(--space-6) var(--space-7); }
+    .hero__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--space-5); row-gap: var(--space-5); align-items: end; }
+    .hero__title { grid-column: 1 / span 10; max-width: none; }
+    .hero__lede { grid-column: 1 / span 5; align-self: start; }
+    .hero__actions { grid-column: 8 / span 5; display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); padding-top: 0; }
+    .hero__actions :global(.hero__call) { width: 100%; }
+    .hero__meta { order: 2; }
+    .hero__brands { order: 3; }
+    .hero__brands.btn { border-color: transparent; min-height: 2.75rem; padding: 0; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .25em; }
+    .hero__brands.btn:hover { background: transparent; color: var(--color-on-field); text-decoration-thickness: 2px; }
+  }
+</style>
